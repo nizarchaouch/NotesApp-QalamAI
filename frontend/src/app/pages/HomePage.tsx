@@ -16,12 +16,21 @@ export function HomePage() {
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input placeholder="Search notes..." className="pl-8" />
         </div>
-        <div>
+        <div className="flex flex-col gap-4">
+          <GlassCard className="p-4">
+            <h2 className="text-lg font-semibold">My Notes</h2>
+          </GlassCard>
+          <GlassCard className="p-4">
+            <h2 className="text-lg font-semibold">My Notes</h2>
+          </GlassCard>
+        </div>
+        {/* No notes yet */}
+        {/* <div>
           <GlassCard className="flex flex-col items-center justify-center gap-2 p-8">
             <h2 className="text-lg font-semibold">No notes yet</h2>
             <p className="text-sm text-muted-foreground">Start by creating your first note.</p>
           </GlassCard>
-        </div>
+        </div> */}
       </GlassCard>
 
     </div>
