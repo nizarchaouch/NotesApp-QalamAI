@@ -12,7 +12,7 @@ export function Header() {
               to="/"
               className="text-sm font-semibold tracking-wide"
             >
-              Maswada AI
+              Qalam AI
             </Link>
             <span className="hidden text-xs text-muted-foreground sm:inline">
               Note with IA
