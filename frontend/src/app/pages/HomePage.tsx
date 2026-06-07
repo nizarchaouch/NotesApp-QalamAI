@@ -11,7 +11,7 @@ export function HomePage() {
         <div className="flex items-center justify-between">
           <h1 className="text-xl font-bold">My Notes</h1>
           <Button><Plus /> Create Note</Button>
-        </div>
+        </div>  
         <div className="relative">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input placeholder="Search notes..." className="pl-8" />
