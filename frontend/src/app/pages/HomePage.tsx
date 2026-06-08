@@ -5,11 +5,24 @@ import { Plus, Search } from "lucide-react"
 import { useEffect, useState } from "react"
 import type { Note } from "@/types"
 import useNotesAPI from "@/hooks/useNotesAPI"
+import { useNavigate } from "react-router-dom"
+
 
 export function HomePage() {
   const [notes, setNotes] = useState<Note[]>([]);
-  const { getAllNotes } = useNotesAPI();
+  const { getAllNotes, createNote } = useNotesAPI();
+  const navigate = useNavigate();
 
+  const handleCreateNote = async () => {
+    try {
+      const note = await createNote({ title: "New Note", content: "This is the content of the new note." });
+      if (note) {
+        navigate(`/notes/${note.id}`);
+      }
+    } catch (error) {
+      console.error("Error creating note:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -29,7 +42,7 @@ export function HomePage() {
       <GlassCard className="flex flex-col gap-4 p-4">
         <div className="flex items-center justify-between">
           <h1 className="text-xl font-bold">My Notes</h1>
-          <Button><Plus /> Create Note</Button>
+          <Button onClick={handleCreateNote} ><Plus /> Create Note</Button>
         </div>
         <div className="relative">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
