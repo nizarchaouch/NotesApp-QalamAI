@@ -1,5 +1,6 @@
 import type { CreateNoteDTO, Note } from "@/types";
 import { useAuth } from "@clerk/react";
+import { useCallback } from "react";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
@@ -7,7 +8,7 @@ const API_BASE_URL =
 export default function useNotesAPI() {
   const { getToken } = useAuth();
 
-  const getAllNotes = async () => {
+  const getAllNotes = useCallback(async () => {
     const token = await getToken();
     if (!token) {
       throw new Error("No token found");
@@ -19,9 +20,9 @@ export default function useNotesAPI() {
     });
     const data: { notes: Note[] } = await response.json();
     return data.notes;
-  };
+  }, [getToken]);
 
-  const createNote = async (note: CreateNoteDTO) => {
+  const createNote = useCallback(async (note: CreateNoteDTO) => {
     const token = await getToken();
     if (!token) {
       throw new Error("No token found");
@@ -36,7 +37,7 @@ export default function useNotesAPI() {
     });
     const data: Note = await response.json();
     return data;
-  };
+  }, [getToken]);
 
   return { getAllNotes, createNote };
 }
