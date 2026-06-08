@@ -27,7 +27,7 @@ export function HomePage() {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const notes = await getAllNotes();
+        const notes= await getAllNotes();
         setNotes(notes);
       } catch (error) {
         console.error("Error fetching notes:", error);

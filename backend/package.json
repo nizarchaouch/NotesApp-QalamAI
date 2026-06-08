@@ -1,7 +1,7 @@
 {
-  "name": "maswada-ai-backend",
+  "name": "qalam-ai-backend",
   "version": "1.0.0",
-  "description": "Backend API for Maswada AI note-taking app",
+  "description": "Backend API for Qalam AI note-taking app",
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",

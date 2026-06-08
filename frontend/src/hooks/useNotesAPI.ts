@@ -22,22 +22,25 @@ export default function useNotesAPI() {
     return data.notes;
   }, [getToken]);
 
-  const createNote = useCallback(async (note: CreateNoteDTO) => {
-    const token = await getToken();
-    if (!token) {
-      throw new Error("No token found");
-    }
-    const response = await fetch(`${API_BASE_URL}/api/notes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(note),
-    });
-    const data: Note = await response.json();
-    return data;
-  }, [getToken]);
+  const createNote = useCallback(
+    async (note: CreateNoteDTO) => {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const response = await fetch(`${API_BASE_URL}/api/notes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(note),
+      });
+      const data: { note: Note } = await response.json();
+      return data.note;
+    },
+    [getToken],
+  );
 
   return { getAllNotes, createNote };
 }
