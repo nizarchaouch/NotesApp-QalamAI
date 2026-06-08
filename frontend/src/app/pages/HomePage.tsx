@@ -24,10 +24,14 @@ export function HomePage() {
     }
   };
 
+  const handleNoteClick = (noteId: string) => {
+    navigate(`/notes/${noteId}`);
+  }
+
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const notes= await getAllNotes();
+        const notes = await getAllNotes();
         setNotes(notes);
       } catch (error) {
         console.error("Error fetching notes:", error);
@@ -48,9 +52,10 @@ export function HomePage() {
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input placeholder="Search notes..." className="pl-8" />
         </div>
+        {/* Notes list */}
         <div className="flex flex-col gap-4">
           {notes.map((note) => (
-            <GlassCard key={note.id} className="p-4">
+            <GlassCard key={note.id} onClick={() => handleNoteClick(note.id)} className="p-4 cursor-pointer" >
               <h2 className="text-lg font-semibold">{note.title}</h2>
               <p className="text-sm text-muted-foreground">{note.content}</p>
             </GlassCard>
