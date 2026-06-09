@@ -42,5 +42,22 @@ export default function useNotesAPI() {
     [getToken],
   );
 
-  return { getAllNotes, createNote };
+  const getNoteById = useCallback(
+    async (id: string) => {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const response = await fetch(`${API_BASE_URL}/api/notes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data: { note: Note } = await response.json();
+      return data.note;
+    },
+    [getToken],
+  );
+
+  return { getAllNotes, createNote, getNoteById };
 }
