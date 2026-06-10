@@ -7,7 +7,7 @@ const API_BASE_URL =
 
 export default function useNotesAPI() {
   const { getToken } = useAuth();
-
+/* get all notes */
   const getAllNotes = useCallback(async () => {
     const token = await getToken();
     if (!token) {
@@ -21,7 +21,7 @@ export default function useNotesAPI() {
     const data: { notes: Note[] } = await response.json();
     return data.notes;
   }, [getToken]);
-
+/* create a new note */
   const createNote = useCallback(
     async (note: CreateNoteDTO) => {
       const token = await getToken();
@@ -41,7 +41,7 @@ export default function useNotesAPI() {
     },
     [getToken],
   );
-
+/* get a note by its ID */
   const getNoteById = useCallback(
     async (id: string) => {
       const token = await getToken();
@@ -59,6 +59,7 @@ export default function useNotesAPI() {
     [getToken],
   );
 
+  /* update an existing note */
   const updateNote = async (id: string, note: UpdateNoteDTO) => {
     const token = await getToken();
     if (!token) {
@@ -76,5 +77,20 @@ export default function useNotesAPI() {
     return data.note;
   };
 
-  return { getAllNotes, createNote, getNoteById, updateNote };
+  /* delete a note */
+  const deleteNote = async (id: string) => {
+    const token = await getToken();
+    if (!token) {
+      throw new Error("No token found");
+    }
+    const response = await fetch(`${API_BASE_URL}/api/notes/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: "DELETE",
+    });
+    return response.ok;
+  };
+
+  return { getAllNotes, createNote, getNoteById, updateNote, deleteNote };
 }

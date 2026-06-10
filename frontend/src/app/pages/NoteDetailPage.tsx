@@ -11,7 +11,7 @@ import useNotesAPI from "@/hooks/useNotesAPI";
 export default function NoteDetailPage() {
 
   const [note, setNote] = useState<Note | null>(null);
-  const { getNoteById, updateNote } = useNotesAPI();
+  const { getNoteById, updateNote, deleteNote } = useNotesAPI();
   const navigate = useNavigate();
   const { id } = useParams();
   const [loding, setLoading] = useState(true);
@@ -45,6 +45,18 @@ export default function NoteDetailPage() {
     }
   }
 
+  const deleteNotes = async () => {
+    if (!note) return;
+    try {
+      const success = await deleteNote(note.id);
+      if (success) {
+        navigate("/"); // Redirect to the home page after deletion
+      }
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchNote = async () => {
       try {
@@ -72,7 +84,9 @@ export default function NoteDetailPage() {
       <div className="flex items-center justify-between ">
         <Button variant="outline" className="cursor-pointer" onClick={handleBackClick}> <ArrowLeft /> Back</Button>
 
-        <Button variant="outline" className="cursor-pointer text-red-500"> <Trash2 /> Delete</Button>
+        <Button variant="destructive" className="cursor-pointer" onClick={deleteNotes}>
+          <Trash2 /> Delete
+        </Button>
       </div>
       <div className="flex flex-col">
         <Input value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />
