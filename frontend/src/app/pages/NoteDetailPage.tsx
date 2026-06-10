@@ -7,6 +7,7 @@ import { ArrowLeft, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
+import { toast } from "sonner";
 
 export default function NoteDetailPage() {
 
@@ -35,8 +36,9 @@ export default function NoteDetailPage() {
   const handleSave = async () => {
     if (!note || saving || !userEdited) return;
     try {
-      setSaving(true);
       await updateNote(note.id, { title: note.title, content: note.content });
+      setSaving(true);
+      toast.success("Note saved successfully!");
     } catch (error) {
       console.error("Error updating note:", error);
     } finally {
@@ -50,7 +52,7 @@ export default function NoteDetailPage() {
     try {
       const success = await deleteNote(note.id);
       if (success) {
-        navigate("/"); // Redirect to the home page after deletion
+        navigate("/"); // Redirect to the home page after deletion 
       }
     } catch (error) {
       console.error("Error deleting note:", error);
