@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
 import { toast } from "sonner";
-import { DeleteNoteButton } from "@/components/note/DeleteNoteButton";
+import { DeleteDialog } from "@/components/common/DeleteDialog";
 
 export default function NoteDetailPage() {
 
@@ -90,7 +90,9 @@ export default function NoteDetailPage() {
       <div className="flex items-center justify-between ">
         <Button variant="outline" className="cursor-pointer" onClick={handleBackClick}> <ArrowLeft /> Back</Button>
 
-        <DeleteNoteButton handleDelete={deleteNotes} />
+        <DeleteDialog handleDelete={deleteNotes} buttonText="Delete Note"
+          title="Delete Note"
+          description="This will permanently delete the note and cannot be undone. Are you sure you want to proceed?" />
       </div>
       <div className="flex flex-col">
         <Input value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />

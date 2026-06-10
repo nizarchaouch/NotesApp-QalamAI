@@ -14,24 +14,27 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 
-type DeleteNoteButtonProps = {
-  handleDelete: () => void
+type DeleteDialogProps = {
+  handleDelete: () => void,
+  buttonText?: string
+  title?: string,
+  description?: string,
 }
 
-export function DeleteNoteButton({ handleDelete }: DeleteNoteButtonProps) {
+export function DeleteDialog({ handleDelete, buttonText = "Delete", title, description, }: DeleteDialogProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">Delete Note</Button>
+        <Button variant="destructive">{buttonText}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="sm:max-w-lg">
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
             <Trash2Icon />
           </AlertDialogMedia>
-          <AlertDialogTitle>Delete note?</AlertDialogTitle>
+          <AlertDialogTitle>{title || "Are you sure?"}</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete the note and cannot be undone. Are you sure you want to proceed?
+            {description || "This will permanently delete the note and cannot be undone. Are you sure you want to proceed?"}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -39,7 +42,7 @@ export function DeleteNoteButton({ handleDelete }: DeleteNoteButtonProps) {
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction variant="destructive" className="cursor-pointer" onClick={handleDelete}>
-            Delete
+            Confirm
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
