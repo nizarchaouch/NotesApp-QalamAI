@@ -16,6 +16,7 @@ export default function NoteDetailPage() {
   const { id } = useParams();
   const [loding, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [userEdited, setUserEdited] = useState(false);
 
   const handleBackClick = () => {
     navigate(-1); // Go back to the previous page
@@ -23,14 +24,16 @@ export default function NoteDetailPage() {
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNote(prev => prev ? { ...prev, title: e.target.value } : null);
+    setUserEdited(true);
   }
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNote(prev => prev ? { ...prev, content: e.target.value } : null);
+    setUserEdited(true);
   }
 
   const handleSave = async () => {
-    if (!note) return;
+    if (!note || saving || !userEdited) return;
     try {
       setSaving(true);
       await updateNote(note.id, { title: note.title, content: note.content });
@@ -38,6 +41,7 @@ export default function NoteDetailPage() {
       console.error("Error updating note:", error);
     } finally {
       setSaving(false);
+      setUserEdited(false);
     }
   }
 
@@ -75,7 +79,11 @@ export default function NoteDetailPage() {
         <Textarea value={note?.content} onChange={handleContentChange} rows={20} className="min-h-[400px] resize-none dark:bg-transparent dark:border-none focus-visible:ring-0" />
       </div>
       <div>
-        <Button onClick={handleSave} variant="outline" className="float-right text-green-500 cursor-pointer">{saving ? "Saving..." : "Save"}</Button>
+        <span className={`float-right ${saving || !userEdited ? "cursor-not-allowed" : "cursor-pointer"}`}>
+          <Button onClick={handleSave} disabled={saving || !userEdited} variant="outline" className="text-green-500">
+            {saving ? "Saving..." : "Save"}
+          </Button>
+        </span>
       </div>
     </GlassCard>
   );
