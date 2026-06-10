@@ -41,6 +41,7 @@ export default function NoteDetailPage() {
       toast.success("Note saved successfully!");
     } catch (error) {
       console.error("Error updating note:", error);
+      toast.error("Failed to save the note. Please try again.");
     } finally {
       setSaving(false);
       setUserEdited(false);
@@ -53,9 +54,11 @@ export default function NoteDetailPage() {
       const success = await deleteNote(note.id);
       if (success) {
         navigate("/"); // Redirect to the home page after deletion 
+        toast.success("Note deleted successfully!");
       }
     } catch (error) {
       console.error("Error deleting note:", error);
+      toast.error("Failed to delete the note. Please try again.");
     }
   };
 
