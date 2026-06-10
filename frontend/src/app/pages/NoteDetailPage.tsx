@@ -14,6 +14,7 @@ export default function NoteDetailPage() {
   const { getNoteById } = useNotesAPI();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [loding, setLoading] = useState(true);
 
   const handleBackClick = () => {
     navigate(-1); // Go back to the previous page
@@ -37,11 +38,17 @@ export default function NoteDetailPage() {
         };
       } catch (error) {
         console.error("Error fetching note:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchNote();
   }, [getNoteById, id]);
+
+  if (loding) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <GlassCard className="p-4 flex flex-col gap-4">
