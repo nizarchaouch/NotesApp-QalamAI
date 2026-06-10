@@ -11,10 +11,11 @@ import useNotesAPI from "@/hooks/useNotesAPI";
 export default function NoteDetailPage() {
 
   const [note, setNote] = useState<Note | null>(null);
-  const { getNoteById } = useNotesAPI();
+  const { getNoteById, updateNote } = useNotesAPI();
   const navigate = useNavigate();
   const { id } = useParams();
   const [loding, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   const handleBackClick = () => {
     navigate(-1); // Go back to the previous page
@@ -26,6 +27,18 @@ export default function NoteDetailPage() {
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNote(prev => prev ? { ...prev, content: e.target.value } : null);
+  }
+
+  const handleSave = async () => {
+    if (!note) return;
+    try {
+      setSaving(true);
+      await updateNote(note.id, { title: note.title, content: note.content });
+    } catch (error) {
+      console.error("Error updating note:", error);
+    } finally {
+      setSaving(false);
+    }
   }
 
   useEffect(() => {
@@ -55,11 +68,14 @@ export default function NoteDetailPage() {
       <div className="flex items-center justify-between ">
         <Button variant="outline" className="cursor-pointer" onClick={handleBackClick}> <ArrowLeft /> Back</Button>
 
-        <Button variant="outline" className="cursor-pointer text-red-500" > <Trash2 /> Delete</Button>
+        <Button variant="outline" className="cursor-pointer text-red-500"> <Trash2 /> Delete</Button>
       </div>
       <div className="flex flex-col">
         <Input value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />
-        <Textarea value={note?.content} onChange={handleContentChange} placeholder="Note Content" rows={20} className="min-h-[400px] resize-none dark:bg-transparent dark:border-none focus-visible:ring-0" />
+        <Textarea value={note?.content} onChange={handleContentChange} rows={20} className="min-h-[400px] resize-none dark:bg-transparent dark:border-none focus-visible:ring-0" />
+      </div>
+      <div>
+        <Button onClick={handleSave} variant="outline" className="float-right text-green-500 cursor-pointer">{saving ? "Saving..." : "Save"}</Button>
       </div>
     </GlassCard>
   );
