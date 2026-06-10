@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
 import { toast } from "sonner";
+import { DeleteNoteButton } from "@/components/note/DeleteNoteButton";
 
 export default function NoteDetailPage() {
 
@@ -89,9 +90,7 @@ export default function NoteDetailPage() {
       <div className="flex items-center justify-between ">
         <Button variant="outline" className="cursor-pointer" onClick={handleBackClick}> <ArrowLeft /> Back</Button>
 
-        <Button variant="destructive" className="cursor-pointer" onClick={deleteNotes}>
-          <Trash2 /> Delete
-        </Button>
+        <DeleteNoteButton handleDelete={deleteNotes} />
       </div>
       <div className="flex flex-col">
         <Input value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />
