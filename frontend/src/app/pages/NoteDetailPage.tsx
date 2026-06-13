@@ -3,7 +3,7 @@ import { GlassCard } from "@/components/common/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Trash2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
@@ -68,11 +68,16 @@ export default function NoteDetailPage() {
       try {
         if (!id) return;
         const note = await getNoteById(id);
-        if (note) {
-          setNote(note);
+        if (!note) {
+          toast.error("Note not found");
+          navigate("/");
+          return;
         };
+        setNote(note);
       } catch (error) {
         console.error("Error fetching note:", error);
+        toast.error("Note not found");
+        navigate("/");
       } finally {
         setLoading(false);
       }
