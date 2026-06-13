@@ -31,16 +31,19 @@ export default function NoteDetailPage() {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNote(prev => prev ? { ...prev, title: e.target.value } : null);
     setUserEdited(true);
+    setAutoSaveStatus("unsaved");
   }
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNote(prev => prev ? { ...prev, content: e.target.value } : null);
     setUserEdited(true);
+    setAutoSaveStatus("unsaved");
   }
 
   const handleSave = async () => {
     if (!note || saving || !userEdited) return;
     try {
+      setAutoSaveStatus("saving");
       await updateNote(note.id, { title: note.title, content: note.content });
       setSaving(true);
       // toast.success("Note saved successfully!");
@@ -50,6 +53,7 @@ export default function NoteDetailPage() {
     } finally {
       setSaving(false);
       setUserEdited(false);
+      setAutoSaveStatus("saved");
     }
   }
 
@@ -102,8 +106,8 @@ export default function NoteDetailPage() {
         <AutoSaveIndicator autoSaveStatus={autoSaveStatus} />
         </div>
 
-        <DeleteDialog handleDelete={deleteNotes} buttonText="Delete Note"
-          title="Delete"
+        <DeleteDialog handleDelete={deleteNotes} buttonText="Delete"
+          title="Delete Note"
           description="This will permanently delete the note and cannot be undone. Are you sure you want to proceed?" />
       </div>
       <div className="flex flex-col">
