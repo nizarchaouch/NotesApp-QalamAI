@@ -1,4 +1,4 @@
-import type { AutoSaveStatus, Note } from "@/types";
+import type { Note } from "@/types";
 import { GlassCard } from "@/components/common/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import useNotesAPI from "@/hooks/useNotesAPI";
 import { toast } from "sonner";
 import { DeleteDialog } from "@/components/common/DeleteDialog";
 import AutoSaveIndicator from "@/components/note/AutoSaveIndicator";
+import useAutoSave from "@/hooks/useAutoSave";
 
 
 
@@ -22,7 +23,23 @@ export default function NoteDetailPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [userEdited, setUserEdited] = useState(false);
-  const [autoSaveStatus, setAutoSaveStatus] = useState<AutoSaveStatus>("initial");
+
+  const handleSave = useCallback(async () => {
+    if (!note || saving || !userEdited) return;
+    try {
+      setSaving(true);
+      await updateNote(note.id, { title: note.title, content: note.content });
+      // toast.success("Note saved successfully!");
+      setUserEdited(false);
+    } catch (error) {
+      console.error("Error updating note:", error);
+      toast.error("Failed to save the note. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  }, [note, updateNote])
+
+  const { autoSaveStatus, setAutoSaveStatus } = useAutoSave({ note, userEdited, handleSave });
 
   const handleBackClick = () => {
     navigate(-1); // Go back to the previous page
@@ -40,22 +57,7 @@ export default function NoteDetailPage() {
     setAutoSaveStatus("unsaved");
   }
 
-  const handleSave = useCallback(async () => {
-    if (!note || saving || !userEdited) return;
-    try {
-      setSaving(true);
-      setAutoSaveStatus("saving");
-      await updateNote(note.id, { title: note.title, content: note.content });
-      // toast.success("Note saved successfully!");
-      setUserEdited(false);
-      setAutoSaveStatus("saved");
-    } catch (error) {
-      console.error("Error updating note:", error);
-      toast.error("Failed to save the note. Please try again.");
-    } finally {
-      setSaving(false);
-    }
-  }, [note, updateNote])
+
 
   const deleteNotes = async () => {
     if (!note) return;
@@ -92,15 +94,6 @@ export default function NoteDetailPage() {
 
     fetchNote();
   }, [getNoteById, id]);
-
-  useEffect(() => {
-    if (!note || !userEdited) return;
-    const timeouId = setTimeout(() => {
-      handleSave();
-    }, 2000);
-
-    return () => clearTimeout(timeouId);
-  }, [note?.title, note?.content, handleSave, userEdited]);
 
   if (loading) {
     return <div className="text-center">Loading...</div>;
