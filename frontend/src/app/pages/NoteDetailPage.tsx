@@ -1,4 +1,4 @@
-import type { Note } from "@/types";
+import type { AutoSaveStatus, Note } from "@/types";
 import { GlassCard } from "@/components/common/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
 import { toast } from "sonner";
 import { DeleteDialog } from "@/components/common/DeleteDialog";
+import AutoSaveIndicator from "@/components/note/AutoSaveIndicator";
+
+
 
 export default function NoteDetailPage() {
 
@@ -19,6 +22,7 @@ export default function NoteDetailPage() {
   const [loding, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [userEdited, setUserEdited] = useState(false);
+  const [autoSaveStatus, setAutoSaveStatus] = useState<AutoSaveStatus>("initial");
 
   const handleBackClick = () => {
     navigate(-1); // Go back to the previous page
@@ -39,7 +43,7 @@ export default function NoteDetailPage() {
     try {
       await updateNote(note.id, { title: note.title, content: note.content });
       setSaving(true);
-      toast.success("Note saved successfully!");
+      // toast.success("Note saved successfully!");
     } catch (error) {
       console.error("Error updating note:", error);
       toast.error("Failed to save the note. Please try again.");
@@ -93,10 +97,13 @@ export default function NoteDetailPage() {
   return (
     <GlassCard className="p-4 flex flex-col gap-4">
       <div className="flex items-center justify-between ">
+        <div className="flex items-center gap-4">
         <Button variant="outline" className="cursor-pointer" onClick={handleBackClick}> <ArrowLeft /> Back</Button>
+        <AutoSaveIndicator autoSaveStatus={autoSaveStatus} />
+        </div>
 
         <DeleteDialog handleDelete={deleteNotes} buttonText="Delete Note"
-          title="Delete Note"
+          title="Delete"
           description="This will permanently delete the note and cannot be undone. Are you sure you want to proceed?" />
       </div>
       <div className="flex flex-col">

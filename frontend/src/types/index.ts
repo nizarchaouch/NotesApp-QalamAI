@@ -17,3 +17,5 @@ export type UpdateNoteDTO = {
   title?: string;
   content?: string;
 };
+
+export type AutoSaveStatus = "initial" | "saving" | "saved" | "pending";
