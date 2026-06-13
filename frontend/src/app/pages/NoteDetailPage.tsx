@@ -94,6 +94,15 @@ export default function NoteDetailPage() {
     fetchNote();
   }, [getNoteById, id]);
 
+  useEffect(() => {
+    if (!note || !userEdited) return;
+    const timeouId = setTimeout(() => {
+      handleSave();
+    }, 2000);
+
+    return () => clearTimeout(timeouId);
+  }, [note?.title, note?.content]);
+
   if (loading) {
     return <div className="text-center">Loading...</div>;
   }
@@ -114,13 +123,14 @@ export default function NoteDetailPage() {
         <Input value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />
         <Textarea value={note?.content} onChange={handleContentChange} rows={20} className="min-h-[400px] resize-none dark:bg-transparent dark:border-none focus-visible:ring-0" />
       </div>
-      <div>
+      {/* Save Button */}
+      {/* <div>
         <span className={`float-right ${saving || !userEdited ? "cursor-not-allowed" : "cursor-pointer"}`}>
           <Button onClick={handleSave} disabled={saving || !userEdited} variant="outline" className="text-green-500">
             {saving ? "Saving..." : "Save"}
           </Button>
         </span>
-      </div>
+      </div> */}
     </GlassCard>
   );
 }
