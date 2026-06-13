@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
 import { toast } from "sonner";
@@ -40,7 +40,7 @@ export default function NoteDetailPage() {
     setAutoSaveStatus("unsaved");
   }
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!note || saving || !userEdited) return;
     try {
       setSaving(true);
@@ -55,7 +55,7 @@ export default function NoteDetailPage() {
     } finally {
       setSaving(false);
     }
-  }
+  }, [note, updateNote])
 
   const deleteNotes = async () => {
     if (!note) return;
@@ -70,7 +70,6 @@ export default function NoteDetailPage() {
       toast.error("Failed to delete the note. Please try again.");
     }
   };
-
   useEffect(() => {
     const fetchNote = async () => {
       try {
@@ -101,7 +100,7 @@ export default function NoteDetailPage() {
     }, 2000);
 
     return () => clearTimeout(timeouId);
-  }, [note?.title, note?.content]);
+  }, [note?.title, note?.content, handleSave, userEdited]);
 
   if (loading) {
     return <div className="text-center">Loading...</div>;
