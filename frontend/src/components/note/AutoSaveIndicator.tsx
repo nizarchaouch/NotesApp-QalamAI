@@ -7,11 +7,11 @@ type props = {
 export default function AutoSaveIndicator({ autoSaveStatus }: props) {
     switch (autoSaveStatus) {
         case "saving":
-            return <span className="text-sm text-gray-500">Saving...</span>;
+            return <span className="text-sm text-zinc-500">Saving...</span>;
         case "saved":
-            return <span className="text-sm text-green-500">Saved</span>;
-        case "pending":
-            return <span className="text-sm text-yellow-500">Pending changes...</span>;
+            return <span className="text-sm text-zinc-500">Saved</span>;
+        case "unsaved":
+            return <span className="text-sm text-zinc-500">Unsaved changes</span>;
         case "initial":
         default:
             return null;

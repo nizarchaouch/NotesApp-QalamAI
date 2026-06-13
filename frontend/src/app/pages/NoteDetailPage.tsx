@@ -19,7 +19,7 @@ export default function NoteDetailPage() {
   const { getNoteById, updateNote, deleteNote } = useNotesAPI();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [loding, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [userEdited, setUserEdited] = useState(false);
   const [autoSaveStatus, setAutoSaveStatus] = useState<AutoSaveStatus>("initial");
@@ -90,8 +90,8 @@ export default function NoteDetailPage() {
     fetchNote();
   }, [getNoteById, id]);
 
-  if (loding) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return <div className="text-center">Loading...</div>;
   }
 
   return (
