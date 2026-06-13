@@ -43,17 +43,17 @@ export default function NoteDetailPage() {
   const handleSave = async () => {
     if (!note || saving || !userEdited) return;
     try {
+      setSaving(true);
       setAutoSaveStatus("saving");
       await updateNote(note.id, { title: note.title, content: note.content });
-      setSaving(true);
       // toast.success("Note saved successfully!");
+      setUserEdited(false);
+      setAutoSaveStatus("saved");
     } catch (error) {
       console.error("Error updating note:", error);
       toast.error("Failed to save the note. Please try again.");
     } finally {
       setSaving(false);
-      setUserEdited(false);
-      setAutoSaveStatus("saved");
     }
   }
 
@@ -102,8 +102,8 @@ export default function NoteDetailPage() {
     <GlassCard className="p-4 flex flex-col gap-4">
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-4">
-        <Button variant="outline" className="cursor-pointer" onClick={handleBackClick}> <ArrowLeft /> Back</Button>
-        <AutoSaveIndicator autoSaveStatus={autoSaveStatus} />
+          <Button variant="outline" className="cursor-pointer" onClick={handleBackClick}> <ArrowLeft /> Back</Button>
+          <AutoSaveIndicator autoSaveStatus={autoSaveStatus} />
         </div>
 
         <DeleteDialog handleDelete={deleteNotes} buttonText="Delete"
