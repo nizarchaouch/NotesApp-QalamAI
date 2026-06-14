@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { DeleteDialog } from "@/components/common/DeleteDialog";
 import AutoSaveIndicator from "@/components/note/AutoSaveIndicator";
 import useAutoSave from "@/hooks/useAutoSave";
+import useAIFeaturesAPID from "@/hooks/useAIFeaturesAPID";
 
 
 
@@ -18,6 +19,7 @@ export default function NoteDetailPage() {
 
   const [note, setNote] = useState<Note | null>(null);
   const { getNoteById, updateNote, deleteNote } = useNotesAPI();
+  const { translate } = useAIFeaturesAPID();
   const navigate = useNavigate();
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
@@ -57,7 +59,21 @@ export default function NoteDetailPage() {
     setAutoSaveStatus("unsaved");
   }
 
-
+  const handleTranslate = async () => {
+    if (!note) return;
+    try {
+      const result = await translate({ noteId: note.id })
+      if (result) {
+        setNote(prev => prev ? { ...prev, content: result } : null);
+        setUserEdited(true);
+        setAutoSaveStatus("unsaved");
+        toast.success("Note translated successfully!");
+      }
+    } catch (error) {
+      console.error("Error translating note:", error);
+      toast.error("Failed to translate the note. Please try again.");
+    }
+  }
 
   const deleteNotes = async () => {
     if (!note) return;
@@ -72,6 +88,7 @@ export default function NoteDetailPage() {
       toast.error("Failed to delete the note. Please try again.");
     }
   };
+
   useEffect(() => {
     const fetchNote = async () => {
       try {
@@ -112,7 +129,7 @@ export default function NoteDetailPage() {
           description="This will permanently delete the note and cannot be undone. Are you sure you want to proceed?" />
       </div>
       <div>
-        <Button  className="flex items-center gap-2 cursor-pointer">
+        <Button className="flex items-center gap-2 cursor-pointer" onClick={handleTranslate}>
           <Languages /> Translate
         </Button>
       </div>

@@ -1,6 +1,6 @@
 import type { CreateTranslateDTO, CreateTranslateOutputDTO } from "@/types";
 import { API_BASE_URL } from "@/lib/utils";
-import { useAuth } from "node_modules/@clerk/react/dist";
+import { useAuth } from "@clerk/react";
 
 export default function useAIFeaturesAPID() {
   const { getToken } = useAuth();
@@ -21,5 +21,5 @@ export default function useAIFeaturesAPID() {
     const data: CreateTranslateOutputDTO = await response.json();
     return data.result;
   };
-  return translate;
+  return { translate };
 }
