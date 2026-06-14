@@ -3,7 +3,7 @@ import { GlassCard } from "@/components/common/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Languages } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
@@ -110,6 +110,11 @@ export default function NoteDetailPage() {
         <DeleteDialog handleDelete={deleteNotes} buttonText="Delete"
           title="Delete Note"
           description="This will permanently delete the note and cannot be undone. Are you sure you want to proceed?" />
+      </div>
+      <div>
+        <Button  className="flex items-center gap-2 cursor-pointer">
+          <Languages /> Translate
+        </Button>
       </div>
       <div className="flex flex-col">
         <Input value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />
