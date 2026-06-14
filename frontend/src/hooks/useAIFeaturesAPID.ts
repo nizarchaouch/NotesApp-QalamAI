@@ -18,7 +18,8 @@ export default function useAIFeaturesAPID() {
       },
       body: JSON.stringify(note),
     });
-    const data:  CreateTranslateOutputDTO  = await response.json();
+    const data: CreateTranslateOutputDTO = await response.json();
     return data.result;
   };
+  return translate;
 }
