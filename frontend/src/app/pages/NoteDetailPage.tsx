@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Languages } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
 import { toast } from "sonner";
@@ -12,6 +12,7 @@ import { DeleteDialog } from "@/components/common/DeleteDialog";
 import AutoSaveIndicator from "@/components/note/AutoSaveIndicator";
 import useAutoSave from "@/hooks/useAutoSave";
 import useAIFeaturesAPID from "@/hooks/useAIFeaturesAPID";
+import { detectTextDirection } from "@/lib/utils";
 
 
 
@@ -25,6 +26,10 @@ export default function NoteDetailPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [userEdited, setUserEdited] = useState(false);
+
+  /* Direction Text */
+  const titleDirection = useMemo(() => detectTextDirection(note?.title || ""), [note?.title]);
+  const contentDirection = useMemo(() => detectTextDirection(note?.content || ""), [note?.content]);
 
   const handleSave = useCallback(async () => {
     if (!note || saving || !userEdited) return;
@@ -134,8 +139,8 @@ export default function NoteDetailPage() {
         </Button>
       </div>
       <div className="flex flex-col">
-        <Input value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />
-        <Textarea value={note?.content} onChange={handleContentChange} rows={20} className="min-h-[400px] resize-none dark:bg-transparent dark:border-none focus-visible:ring-0" />
+        <Input dir={titleDirection} value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />
+        <Textarea dir={contentDirection} value={note?.content} onChange={handleContentChange} rows={20} className="min-h-[400px] resize-none dark:bg-transparent dark:border-none focus-visible:ring-0" />
       </div>
       {/* Save Button */}
       {/* <div>
