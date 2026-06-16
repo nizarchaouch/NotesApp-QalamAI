@@ -10,8 +10,9 @@ export default function useNotesAPI() {
 /* get all notes */
   const getAllNotes = useCallback(async () => {
     const token = await getToken();
-    if (!token) {
-      throw new Error("No token found");
+   if (!token){
+      console.log("No token found");
+      return;
     }
     const response = await fetch(`${API_BASE_URL}/api/notes`, {
       headers: {
@@ -25,9 +26,10 @@ export default function useNotesAPI() {
   const createNote = useCallback(
     async (note: CreateNoteDTO) => {
       const token = await getToken();
-      if (!token) {
-        throw new Error("No token found");
-      }
+      if (!token){
+      console.log("No token found");
+      return;
+    }
       const response = await fetch(`${API_BASE_URL}/api/notes`, {
         method: "POST",
         headers: {
@@ -45,9 +47,10 @@ export default function useNotesAPI() {
   const getNoteById = useCallback(
     async (id: string) => {
       const token = await getToken();
-      if (!token) {
-        throw new Error("No token found");
-      }
+     if (!token){
+      console.log("No token found");
+      return;
+    }
       const response = await fetch(`${API_BASE_URL}/api/notes/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,8 +65,9 @@ export default function useNotesAPI() {
   /* update an existing note */
   const updateNote = async (id: string, note: UpdateNoteDTO) => {
     const token = await getToken();
-    if (!token) {
-      throw new Error("No token found");
+    if (!token){
+      console.log("No token found");
+      return;
     }
     const response = await fetch(`${API_BASE_URL}/api/notes/${id}`, {
       headers: {
@@ -80,8 +84,9 @@ export default function useNotesAPI() {
   /* delete a note */
   const deleteNote = async (id: string) => {
     const token = await getToken();
-    if (!token) {
-      throw new Error("No token found");
+    if (!token){
+      console.log("No token found");
+      return;
     }
     const response = await fetch(`${API_BASE_URL}/api/notes/${id}`, {
       headers: {

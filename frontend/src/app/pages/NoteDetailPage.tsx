@@ -20,7 +20,7 @@ export default function NoteDetailPage() {
 
   const [note, setNote] = useState<Note | null>(null);
   const { getNoteById, updateNote, deleteNote } = useNotesAPI();
-  const { translate } = useAIFeaturesAPID();
+  const { translate, summarize } = useAIFeaturesAPID();
   const navigate = useNavigate();
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
@@ -77,6 +77,22 @@ export default function NoteDetailPage() {
     } catch (error) {
       console.error("Error translating note:", error);
       toast.error("Failed to translate the note. Please try again.");
+    }
+  }
+
+  const handleSummerize = async () => {
+    if (!note) return;
+    try {
+      const result = await summarize({ noteId: note.id })
+      if (result) {
+        setNote(prev => prev ? { ...prev, content: result } : null);
+        setUserEdited(true);
+        setAutoSaveStatus("unsaved");
+        toast.success("Note summarized successfully!");
+      }
+    } catch (error) {
+      console.error("Error translating note:", error);
+      toast.error("Failed to summarize the note. Please try again.");
     }
   }
 

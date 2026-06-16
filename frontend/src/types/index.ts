@@ -28,3 +28,7 @@ export type CreateTranslateDTO = {
 export type CreateTranslateOutputDTO = {
   result: string;
 };
+
+export type CreateSummarizeDTO = {
+  result: string;
+};
