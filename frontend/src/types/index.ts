@@ -30,5 +30,10 @@ export type CreateTranslateOutputDTO = {
 };
 
 export type CreateSummarizeDTO = {
+  noteId?: string;
+  text?: string;
+};
+
+export type CreateSummarizeOutputDTO = {
   result: string;
 };

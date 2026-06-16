@@ -2,6 +2,7 @@ import type {
   CreateTranslateDTO,
   CreateTranslateOutputDTO,
   CreateSummarizeDTO,
+  CreateSummarizeOutputDTO,
 } from "@/types";
 import { API_BASE_URL } from "@/lib/utils";
 import { useAuth } from "@clerk/react";
@@ -42,7 +43,7 @@ export default function useAIFeaturesAPID() {
       },
       body: JSON.stringify(note),
     });
-    const data: CreateSummarizeDTO = await response.json();
+    const data: CreateSummarizeOutputDTO = await response.json();
     return data.result;
   };
   return { translate, summarize  };

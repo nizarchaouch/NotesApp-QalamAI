@@ -80,10 +80,10 @@ export default function NoteDetailPage() {
     }
   }
 
-  const handleSummerize = async () => {
+  const handleSummarize = async () => {
     if (!note) return;
     try {
-      const result = await summarize({ noteId: note.id })
+      const result = await summarize({ noteId: note.id });
       if (result) {
         setNote(prev => prev ? { ...prev, content: result } : null);
         setUserEdited(true);
@@ -91,10 +91,10 @@ export default function NoteDetailPage() {
         toast.success("Note summarized successfully!");
       }
     } catch (error) {
-      console.error("Error translating note:", error);
+      console.error("Error summarizing note:", error);
       toast.error("Failed to summarize the note. Please try again.");
     }
-  }
+  };
 
   const deleteNotes = async () => {
     if (!note) return;
@@ -149,9 +149,12 @@ export default function NoteDetailPage() {
           title="Delete Note"
           description="This will permanently delete the note and cannot be undone. Are you sure you want to proceed?" />
       </div>
-      <div>
+      <div className="flex gap-2">
         <Button className="flex items-center gap-2 cursor-pointer" onClick={handleTranslate}>
           <Languages /> Translate
+        </Button>
+        <Button className="flex items-center gap-2 cursor-pointer" onClick={handleSummarize}>
+          Summarize
         </Button>
       </div>
       <div className="flex flex-col">
