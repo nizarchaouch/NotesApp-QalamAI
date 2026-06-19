@@ -3,7 +3,7 @@ import { GlassCard } from "@/components/common/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Languages, Pencil } from "lucide-react";
+import { ArrowLeft, Languages, Pencil, Book } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
@@ -31,6 +31,8 @@ export default function NoteDetailPage() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [loadingRewite, setLoadingRewite] = useState(false);
+  const [loadingSummarize, setLoadingSummarize] = useState(false);
+  const [loadingTranslate, setLoadingTranslate] = useState(false);
   const [saving, setSaving] = useState(false);
   const [userEdited, setUserEdited] = useState(false);
 
@@ -73,6 +75,8 @@ export default function NoteDetailPage() {
 
   const handleTranslate = async () => {
     if (!note) return;
+    setLoadingTranslate(true);
+
     try {
       const result = await translate({ noteId: note.id })
       if (result) {
@@ -85,11 +89,15 @@ export default function NoteDetailPage() {
     } catch (error) {
       console.error("Error translating note:", error);
       toast.error("Failed to translate the note. Please try again.");
+    } finally {
+      setLoadingTranslate(false);
     }
   }
 
   const handleSummarize = async () => {
     if (!note) return;
+    setLoadingSummarize(true);
+
     try {
       const result = await summarize({ noteId: note.id });
       if (result) {
@@ -102,14 +110,15 @@ export default function NoteDetailPage() {
     } catch (error) {
       console.error("Error summarizing note:", error);
       toast.error("Failed to summarize the note. Please try again.");
+    } finally {
+      setLoadingSummarize(false);
     }
   };
 
   const handlerewite = async (mode: RewriteMode) => {
     if (!note) return;
-
     setLoadingRewite(true);
-    
+
     try {
       const result = await rewrite({ noteId: note.id, mode });
       if (result) {
@@ -183,14 +192,14 @@ export default function NoteDetailPage() {
       </div>
       <div className="flex gap-2">
         <Button className="flex items-center gap-2 cursor-pointer" onClick={handleTranslate}>
-          <Languages /> Translate
+          <Languages />  {!loadingTranslate ? "Translate" : "Loading..."}
         </Button>
         <Button className="flex items-center gap-2 cursor-pointer" onClick={handleSummarize}>
-          Summarize
+          <Book /> {!loadingSummarize ? "Summarize" : "Loading..."}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button ><Pencil />{!loadingRewite?"Change Tone":"Loading..."} </Button>
+            <Button ><Pencil />{!loadingRewite ? "Change Tone" : "Loading..."} </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuGroup>
