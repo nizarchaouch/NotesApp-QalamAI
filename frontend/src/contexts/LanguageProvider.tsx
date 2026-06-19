@@ -1,5 +1,5 @@
 import { defaultLocale, type Locale } from "@/i18n";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LanguageContext } from "@/contexts/LangaugeContext"
 
 type LanguageProviderProps = {
@@ -14,6 +14,11 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     const toggleLanguage = () => {
         setLocale(locale === 'en' ? 'ar' : 'en')
     }
+
+    useEffect(() => {
+        document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+        document.documentElement.lang = locale
+    }, [locale, isRTL])
 
     return (
         <LanguageContext.Provider value={{ locale, setLocale, isRTL, toggleLanguage }}>

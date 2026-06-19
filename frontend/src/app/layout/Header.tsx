@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/hooks/useLanguage"
 import { Languages } from "lucide-react"
+import { FormattedMessage } from "react-intl";
 
 export function Header() {
 
@@ -17,10 +18,10 @@ export function Header() {
               to="/"
               className="text-sm font-semibold tracking-wide"
             >
-              Qalam AI
+              <FormattedMessage defaultMessage="Qalam AI" id="title" />
             </Link>
             <span className="hidden text-xs text-muted-foreground sm:inline">
-              Note with IA
+              Smart Note with AI
             </span>
           </div>
 
