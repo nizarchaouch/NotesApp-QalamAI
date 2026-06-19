@@ -18,8 +18,6 @@ export type UpdateNoteDTO = {
   content?: string;
 };
 
-export type AutoSaveStatus = "initial" | "saving" | "saved" | "unsaved";
-
 export type CreateTranslateDTO = {
   noteId?: string;
   text?: string;
@@ -37,3 +35,17 @@ export type CreateSummarizeDTO = {
 export type CreateSummarizeOutputDTO = {
   result: string;
 };
+
+export type CreateRewriteDTO = {
+  noteId?: string;
+  text?: string;
+  mode: RewriteMode;
+};
+
+export type CreateRewriteOutputDTO = {
+  result: string;
+};
+
+export type AutoSaveStatus = "initial" | "saving" | "saved" | "unsaved";
+
+export type RewriteMode = "comedy" | "formal" | "casual";

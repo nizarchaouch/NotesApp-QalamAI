@@ -3,6 +3,8 @@ import type {
   CreateTranslateOutputDTO,
   CreateSummarizeDTO,
   CreateSummarizeOutputDTO,
+  CreateRewriteDTO,
+  CreateRewriteOutputDTO,
 } from "@/types";
 import { API_BASE_URL } from "@/lib/utils";
 import { useAuth } from "@clerk/react";
@@ -46,5 +48,25 @@ export default function useAIFeaturesAPID() {
     const data: CreateSummarizeOutputDTO = await response.json();
     return data.result;
   };
-  return { translate, summarize  };
+
+  const rewrite = async (note: CreateRewriteDTO) => {
+    const token = await getToken();
+    if (!token) {
+      console.log("No token found");
+      return;
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/ai/rewrite`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(note),
+    });
+    const data: CreateRewriteOutputDTO = await response.json();
+    return data.result;
+  };
+
+  return { translate, summarize, rewrite };
 }

@@ -1,4 +1,4 @@
-import type { Note } from "@/types";
+import type { Note, RewriteMode } from "@/types";
 import { GlassCard } from "@/components/common/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,15 +22,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 
-
 export default function NoteDetailPage() {
 
   const [note, setNote] = useState<Note | null>(null);
   const { getNoteById, updateNote, deleteNote } = useNotesAPI();
-  const { translate, summarize } = useAIFeaturesAPID();
+  const { translate, summarize, rewrite } = useAIFeaturesAPID();
   const navigate = useNavigate();
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
+  const [loadingRewite, setLoadingRewite] = useState(false);
   const [saving, setSaving] = useState(false);
   const [userEdited, setUserEdited] = useState(false);
 
@@ -80,6 +80,7 @@ export default function NoteDetailPage() {
         setUserEdited(true);
         setAutoSaveStatus("unsaved");
         toast.success("Note translated successfully!");
+        return
       }
     } catch (error) {
       console.error("Error translating note:", error);
@@ -96,10 +97,33 @@ export default function NoteDetailPage() {
         setUserEdited(true);
         setAutoSaveStatus("unsaved");
         toast.success("Note summarized successfully!");
+        return
       }
     } catch (error) {
       console.error("Error summarizing note:", error);
       toast.error("Failed to summarize the note. Please try again.");
+    }
+  };
+
+  const handlerewite = async (mode: RewriteMode) => {
+    if (!note) return;
+
+    setLoadingRewite(true);
+    
+    try {
+      const result = await rewrite({ noteId: note.id, mode });
+      if (result) {
+        setNote(prev => prev ? { ...prev, content: result } : null);
+        setUserEdited(true);
+        setAutoSaveStatus("unsaved");
+        toast.success("Note rewritten successfully");
+        return
+      }
+    } catch (error) {
+      console.error("Error Rewriting note:", error);
+      toast.error("Failed to rewrite the note. Please try again.");
+    } finally {
+      setLoadingRewite(false);
     }
   };
 
@@ -110,6 +134,7 @@ export default function NoteDetailPage() {
       if (success) {
         navigate("/"); // Redirect to the home page after deletion 
         toast.success("Note deleted successfully!");
+        return
       }
     } catch (error) {
       console.error("Error deleting note:", error);
@@ -165,13 +190,13 @@ export default function NoteDetailPage() {
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button ><Pencil /> Change Tone</Button>
+            <Button ><Pencil />{!loadingRewite?"Change Tone":"Loading..."} </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuGroup>
-              <DropdownMenuItem>Comedy</DropdownMenuItem>
-              <DropdownMenuItem>Formal</DropdownMenuItem>
-              <DropdownMenuItem>Casual</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handlerewite('comedy')}>Comedy</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handlerewite('formal')}>Formal</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handlerewite('casual')}>Casual</DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
