@@ -3,7 +3,7 @@ import { GlassCard } from "@/components/common/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Languages } from "lucide-react";
+import { ArrowLeft, Languages, Pencil } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useNotesAPI from "@/hooks/useNotesAPI";
@@ -13,6 +13,13 @@ import AutoSaveIndicator from "@/components/note/AutoSaveIndicator";
 import useAutoSave from "@/hooks/useAutoSave";
 import useAIFeaturesAPID from "@/hooks/useAIFeaturesAPID";
 import { detectTextDirection } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 
 
@@ -156,6 +163,18 @@ export default function NoteDetailPage() {
         <Button className="flex items-center gap-2 cursor-pointer" onClick={handleSummarize}>
           Summarize
         </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button ><Pencil /> Change Tone</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuGroup>
+              <DropdownMenuItem>Comedy</DropdownMenuItem>
+              <DropdownMenuItem>Formal</DropdownMenuItem>
+              <DropdownMenuItem>Casual</DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className="flex flex-col">
         <Input dir={titleDirection} value={note?.title} onChange={handleTitleChange} className="text-xl font-bold dark:bg-transparent dark:border-none focus-visible:ring-0" />
