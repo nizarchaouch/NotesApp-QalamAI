@@ -9,5 +9,4 @@ export const messages = {
 export const defaultLocale = "en";
 export const supportedLocales = ["en", "ar"];
 
-// export type Locale = keyof typeof messages;
-export type Locale = keyof supportedLocales;
+export type Locale = keyof typeof messages;

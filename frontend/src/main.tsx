@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client"
 import "./index.css"
 import App from "@/app/App"
 import { ClerkProvider } from "@clerk/react"
-import { LanguageProvider } from "./contexts/LangaugeContext"
+import { LanguageProvider } from "./contexts/LanguageProvider"
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
