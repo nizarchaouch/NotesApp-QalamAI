@@ -4,7 +4,7 @@ import { createContext } from "react";
 interface LanguageContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  istRTL: boolean;
+  isRTL: boolean;
   toggleLanguage: () => void;
 }
 
