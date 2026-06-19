@@ -4,6 +4,7 @@ import "./index.css"
 import App from "@/app/App"
 import { ClerkProvider } from "@clerk/react"
 import { LanguageProvider } from "./contexts/LanguageProvider"
+import { IntlWrapper } from "./components/common/IntlWrapper"
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -15,9 +16,11 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <LanguageProvider>
-      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-        <App />
-      </ClerkProvider>
+      <IntlWrapper>
+        <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+          <App />
+        </ClerkProvider>
+      </IntlWrapper>
     </LanguageProvider>
   </StrictMode>
 )
