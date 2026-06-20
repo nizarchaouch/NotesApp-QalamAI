@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/hooks/useLanguage"
 import { Languages } from "lucide-react"
 import { FormattedMessage } from "react-intl";
+import { UserButton } from "@clerk/react";
 
 export function Header() {
 
@@ -30,6 +31,7 @@ export function Header() {
             <Button variant="outline" onClick={toggleLanguage}>
               <Languages /> {isRTL ? "English" : "العربية"}
             </Button>
+            <UserButton />
           </div>
         </div>
       </div>
