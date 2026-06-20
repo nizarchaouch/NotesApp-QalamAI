@@ -1,3 +1,66 @@
 {
-    "title":"Qalam AI"
+  "app": {
+    "title": "Qalam AI",
+    "tagline": "Smart Note with AI"
+  },
+  "header": {
+    "switchToEnglish": "English",
+    "switchToArabic": "العربية"
+  },
+  "footer": {
+    "copyright": "© {year} Maswada AI",
+    "rights": "All rights reserved, Nizar Chaouch"
+  },
+  "home": {
+    "title": "My Notes",
+    "createNote": "Create Note",
+    "searchPlaceholder": "Search notes...",
+    "newNoteTitle": "New Note",
+    "newNoteContent": "This is the content of the new note.",
+    "noNotesTitle": "No notes yet",
+    "noNotesDescription": "Start by creating your first note."
+  },
+  "noteDetail": {
+    "back": "Back",
+    "delete": "Delete",
+    "deleteTitle": "Delete Note",
+    "deleteDescription": "This will permanently delete the note and cannot be undone. Are you sure you want to proceed?",
+    "translate": "Translate",
+    "summarize": "Summarize",
+    "changeTone": "Change Tone",
+    "toneComedy": "Comedy",
+    "toneFormal": "Formal",
+    "toneCasual": "Casual",
+    "loading": "Loading...",
+    "save": "Save",
+    "saving": "Saving...",
+    "toast": {
+      "saveError": "Failed to save the note. Please try again.",
+      "translateSuccess": "Note translated successfully!",
+      "translateError": "Failed to translate the note. Please try again.",
+      "summarizeSuccess": "Note summarized successfully!",
+      "summarizeError": "Failed to summarize the note. Please try again.",
+      "rewriteSuccess": "Note rewritten successfully",
+      "rewriteError": "Failed to rewrite the note. Please try again.",
+      "deleteSuccess": "Note deleted successfully!",
+      "deleteError": "Failed to delete the note. Please try again.",
+      "notFound": "Note not found"
+    }
+  },
+  "autoSave": {
+    "saving": "Saving...",
+    "saved": "Saved",
+    "unsaved": "Unsaved changes"
+  },
+  "deleteDialog": {
+    "defaultTitle": "Are you sure?",
+    "defaultDescription": "This action cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "notFound": {
+    "title": "404 - Not Found",
+    "description": "This page does not exist. Please check the URL or return to the homepage.",
+    "backHome": "Back to home"
+  }
 }

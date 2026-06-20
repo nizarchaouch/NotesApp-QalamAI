@@ -1,3 +1,66 @@
 {
-    "title":"قلم آي"
+  "app": {
+    "title": "قلم آي",
+    "tagline": "ملاحظات ذكية بالذكاء الاصطناعي"
+  },
+  "header": {
+    "switchToEnglish": "English",
+    "switchToArabic": "العربية"
+  },
+  "footer": {
+    "copyright": "© {year} Maswada AI",
+    "rights": "جميع الحقوق محفوظة، Nizar Chaouch"
+  },
+  "home": {
+    "title": "ملاحظاتي",
+    "createNote": "إنشاء ملاحظة",
+    "searchPlaceholder": "البحث في الملاحظات...",
+    "newNoteTitle": "ملاحظة جديدة",
+    "newNoteContent": "هذا هو محتوى الملاحظة الجديدة.",
+    "noNotesTitle": "لا توجد ملاحظات بعد",
+    "noNotesDescription": "ابدأ بإنشاء ملاحظتك الأولى."
+  },
+  "noteDetail": {
+    "back": "رجوع",
+    "delete": "حذف",
+    "deleteTitle": "حذف الملاحظة",
+    "deleteDescription": "سيتم حذف الملاحظة نهائياً ولا يمكن التراجع عن ذلك. هل أنت متأكد أنك تريد المتابعة؟",
+    "translate": "ترجمة",
+    "summarize": "تلخيص",
+    "changeTone": "تغيير الأسلوب",
+    "toneComedy": "كوميدي",
+    "toneFormal": "رسمي",
+    "toneCasual": "غير رسمي",
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "saving": "جاري الحفظ...",
+    "toast": {
+      "saveError": "فشل حفظ الملاحظة. يرجى المحاولة مرة أخرى.",
+      "translateSuccess": "تمت ترجمة الملاحظة بنجاح!",
+      "translateError": "فشلت ترجمة الملاحظة. يرجى المحاولة مرة أخرى.",
+      "summarizeSuccess": "تم تلخيص الملاحظة بنجاح!",
+      "summarizeError": "فشل تلخيص الملاحظة. يرجى المحاولة مرة أخرى.",
+      "rewriteSuccess": "تمت إعادة صياغة الملاحظة بنجاح",
+      "rewriteError": "فشلت إعادة صياغة الملاحظة. يرجى المحاولة مرة أخرى.",
+      "deleteSuccess": "تم حذف الملاحظة بنجاح!",
+      "deleteError": "فشل حذف الملاحظة. يرجى المحاولة مرة أخرى.",
+      "notFound": "الملاحظة غير موجودة"
+    }
+  },
+  "autoSave": {
+    "saving": "جاري الحفظ...",
+    "saved": "تم الحفظ",
+    "unsaved": "تغييرات غير محفوظة"
+  },
+  "deleteDialog": {
+    "defaultTitle": "هل أنت متأكد؟",
+    "defaultDescription": "لا يمكن التراجع عن هذا الإجراء.",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد"
+  },
+  "notFound": {
+    "title": "404 - الصفحة غير موجودة",
+    "description": "هذه الصفحة غير موجودة. يرجى التحقق من الرابط أو العودة إلى الصفحة الرئيسية.",
+    "backHome": "العودة للرئيسية"
+  }
 }
