@@ -3,6 +3,7 @@ import { GlassCard } from "@/components/common/GlassCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Spinner } from "@/components/ui/spinner";
 import { ArrowLeft, Languages, Pencil, Book } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -175,7 +176,7 @@ export default function NoteDetailPage() {
   }, [getNoteById, id]);
 
   if (loading) {
-    return <div className="text-center">Loading...</div>;
+    return <div className="flex justify-center"><Spinner className="size-8" /></div>;
   }
 
   return (
@@ -191,15 +192,17 @@ export default function NoteDetailPage() {
           description="This will permanently delete the note and cannot be undone. Are you sure you want to proceed?" />
       </div>
       <div className="flex gap-2">
-        <Button className="flex items-center gap-2 cursor-pointer" onClick={handleTranslate}>
-          <Languages />  {!loadingTranslate ? "Translate" : "Loading..."}
+        <Button disabled={loadingTranslate} className="flex items-center gap-2 cursor-pointer" onClick={handleTranslate}>
+          {!loadingTranslate ? <><Languages />Translate</> : (<><Spinner /> Loading...</>)}
         </Button>
-        <Button className="flex items-center gap-2 cursor-pointer" onClick={handleSummarize}>
-          <Book /> {!loadingSummarize ? "Summarize" : "Loading..."}
+        <Button disabled={loadingSummarize} className="flex items-center gap-2 cursor-pointer" onClick={handleSummarize}>
+          {!loadingSummarize ? <><Book />Summarize</> : (<><Spinner /> Loading...</>)}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button ><Pencil />{!loadingRewite ? "Change Tone" : "Loading..."} </Button>
+            <Button disabled={loadingRewite} >
+              {!loadingRewite ? <><Pencil />Change Tone</> : (<><Spinner /> Loading...</>)}
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuGroup>
