@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "قلم آي",
+    "title": "قلم AI",
     "tagline": "ملاحظات ذكية بالذكاء الاصطناعي"
   },
   "header": {
@@ -14,11 +14,15 @@
   "home": {
     "title": "ملاحظاتي",
     "createNote": "إنشاء ملاحظة",
-    "searchPlaceholder": "البحث في الملاحظات...",
+    "searchPlaceholder": "ابحث في الملاحظات...",
     "newNoteTitle": "ملاحظة جديدة",
     "newNoteContent": "هذا هو محتوى الملاحظة الجديدة.",
     "noNotesTitle": "لا توجد ملاحظات بعد",
-    "noNotesDescription": "ابدأ بإنشاء ملاحظتك الأولى."
+    "noNotesDescription": "ابدأ بإنشاء ملاحظتك الأولى.",
+    "toast": {
+      "createError": "فشل إنشاء الملاحظة. يرجى المحاولة مرة أخرى.",
+      "fetchError": "فشل تحميل الملاحظات. يرجى المحاولة مرة أخرى."
+    }
   },
   "noteDetail": {
     "back": "رجوع",
@@ -31,9 +35,9 @@
     "toneComedy": "كوميدي",
     "toneFormal": "رسمي",
     "toneCasual": "غير رسمي",
-    "loading": "جاري التحميل...",
+    "loading": "جار التحميل...",
     "save": "حفظ",
-    "saving": "جاري الحفظ...",
+    "saving": "جار الحفظ...",
     "toast": {
       "saveError": "فشل حفظ الملاحظة. يرجى المحاولة مرة أخرى.",
       "translateSuccess": "تمت ترجمة الملاحظة بنجاح!",
@@ -48,7 +52,7 @@
     }
   },
   "autoSave": {
-    "saving": "جاري الحفظ...",
+    "saving": "جار الحفظ...",
     "saved": "تم الحفظ",
     "unsaved": "تغييرات غير محفوظة"
   },

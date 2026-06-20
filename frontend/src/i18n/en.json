@@ -18,7 +18,11 @@
     "newNoteTitle": "New Note",
     "newNoteContent": "This is the content of the new note.",
     "noNotesTitle": "No notes yet",
-    "noNotesDescription": "Start by creating your first note."
+    "noNotesDescription": "Start by creating your first note.",
+    "toast": {
+      "createError": "Failed to create the note. Please try again.",
+      "fetchError": "Failed to load notes. Please try again."
+    }
   },
   "noteDetail": {
     "back": "Back",
