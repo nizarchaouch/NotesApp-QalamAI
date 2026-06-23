@@ -10,7 +10,7 @@ export function IntlWrapper({ children }: IntlWrapperProps) {
     const { locale } = useLanguage();
 
     return (
-        <IntlProvider locale={locale} messages={messages[locale]}>
+        <IntlProvider defaultLocale="en" locale={locale} messages={messages[locale]}>
             {children}
         </IntlProvider>
     )
