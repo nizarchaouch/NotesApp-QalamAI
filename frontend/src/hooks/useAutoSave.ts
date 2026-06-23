@@ -16,12 +16,11 @@ export default function useAutoSave({ note, userEdited, handleSave }: Props) {
     if (!note || !userEdited) return;
     const timeouId = setTimeout(() => {
       setAutoSaveStatus("saving");
-      handleSave();
-      setAutoSaveStatus("saved");
+      void handleSave().finally(() => setAutoSaveStatus("saved"));
     }, 2000);
 
     return () => clearTimeout(timeouId);
-  }, [note?.title, note?.content, handleSave, userEdited]);
+  }, [note, note?.title, note?.content, handleSave, userEdited]);
 
   return {
     autoSaveStatus,
